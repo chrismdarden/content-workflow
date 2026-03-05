@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pipeline | Anti-Gravity</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+      :root { --oa-blue: #1b5fd1; --oa-dark: #0b1f3a; }
+      body { background: #f4f6f9; font-family: 'Segoe UI', sans-serif; }
+      .container { max-width: 900px; padding-top: 40px; padding-bottom: 80px; }
+      .card { border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 20px; }
+      .card-header { background: white; border-bottom: 1px solid #eee; padding: 20px; font-weight: 700; color: var(--oa-dark); font-size: 1.1rem; }
+      .step-badge { background: var(--oa-blue); color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 10px; }
+      .btn-primary { background: var(--oa-blue); border: none; }
+      .loading-spinner { display: none; }
+      pre { background: #f8f9fa; padding: 15px; border-radius: 8px; font-size: 0.9rem; }
+      
+      .hidden { display: none !important; }
+      .fade-in { animation: fadeIn 0.5s ease-in; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- HEADER -->
+      <div class="d-flex justify-content-between align-items-center mb-5">
+        <h3 class="fw-bold text-secondary"><span style="color:var(--oa-blue)">Anti-Gravity</span> Pipeline</h3>
+        <button class="btn btn-sm btn-outline-secondary" onclick="showSettings()">Settings</button>
+      </div>
+
+      <!-- STEP 1: INPUTS -->
+      <div class="card" id="step1">
+        <div class="card-header"><span class="step-badge">1</span> Project Setup</div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Client Drive Folder ID</label>
+            <input type="text" class="form-control" id="folderId" placeholder="e.g. 1A2B3C..." value="">
+            <div class="form-text">The folder containing Brand Guidelines and previous work.</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Target Keyword</label>
+              <input type="text" class="form-control" id="keyword" placeholder="e.g. AC Repair">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Location (Geo-Fence)</label>
+              <input type="text" class="form-control" id="location" placeholder="e.g. Marysville, MI">
+            </div>
+          </div>
+          <button class="btn btn-primary w-100" onclick="startResearch()">🚀 Launch Analysis</button>
+        </div>
+      </div>
+
+      <!-- LOADING INDICATOR -->
+      <div class="text-center loading-spinner my-5" id="loader">
+        <div class="spinner-border text-primary mb-3" role="status"></div>
+        <h5 class="text-secondary" id="loaderText">Analyzing Market Data...</h5>
+      </div>
+
+      <!-- STEP 2: RESEARCH BRIEF -->
+      <div class="card hidden fade-in" id="step2">
+        <div class="card-header d-flex justify-content-between">
+          <span><span class="step-badge">2</span> Research Intelligence</span>
+          <span class="badge bg-secondary" id="difficultyBadge">Diff: ?/10</span>
+        </div>
+        <div class="card-body">
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <label class="fw-bold text-muted small">RECOMMENDED H1</label>
+              <div class="p-2 bg-light rounded" id="resH1"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="fw-bold text-muted small">GAP KEYWORDS</label>
+              <div class="p-2 bg-light rounded" id="resGaps"></div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="fw-bold text-muted small">PERSONA INSIGHT</label>
+            <p id="resPersona"></p>
+          </div>
+          <div class="alert alert-info py-2 small">
+            <i class="bi bi-info-circle"></i> Verify this data before proceeding. The outline will be built based on these findings.
+          </div>
+          <button class="btn btn-success w-100" onclick="generateOutline()">✅ Approve & Generate Outline</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: OUTLINE -->
+      <div class="card hidden fade-in" id="step3">
+        <div class="card-header"><span class="step-badge">3</span> Structural Plan</div>
+        <div class="card-body">
+          <textarea class="form-control font-monospace" id="outlineEditor" rows="12" style="font-size:0.85rem"></textarea>
+          <div class="mt-3 d-flex gap-2">
+            <button class="btn btn-primary flex-grow-1" onclick="startDrafting()">✍️ Begin CoVe Drafting</button>
+            <button class="btn btn-outline-secondary" onclick="generateOutline()">🔄 Regenerate</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS MODAL -->
+      <div class="modal fade" id="settingsModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header"><h5>API Configuration</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+              <input type="text" class="form-control mb-2" id="keySerper" placeholder="Serper.dev Key">
+              <input type="text" class="form-control mb-2" id="keyGemini" placeholder="Gemini API Key">
+            </div>
+            <div class="modal-footer"><button class="btn btn-primary" onclick="saveKeys()">Save</button></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CLIENT LOGIC -->
+    <script>
+      let GLOBAL_CONTEXT = "";
+      let RESEARCH_BRIEF = {};
+
+      function showLoader(text) {
+        document.getElementById('loader').style.display = 'block';
+        document.getElementById('loaderText').innerText = text;
+      }
+      function hideLoader() {
+        document.getElementById('loader').style.display = 'none';
+      }
+
+      function startResearch() {
+        const folderId = document.getElementById('folderId').value;
+        const kw = document.getElementById('keyword').value;
+        const loc = document.getElementById('location').value;
+
+        if(!folderId || !kw) return alert("Fill in required fields");
+
+        document.getElementById('step1').classList.add('opacity-50');
+        showLoader("Indexing Drive Folder & Scanning SERPs...");
+
+        // 1. Get Context
+        google.script.run.withSuccessHandler(ctxRes => {
+          if (!ctxRes.success) return alert("Context Error: " + ctxRes.error);
+          GLOBAL_CONTEXT = ctxRes.context;
+          
+          showLoader("Analyzing Competitors & Synthesizing Brief...");
+
+          // 2. Run Research
+          google.script.run.withSuccessHandler(res => {
+            hideLoader();
+            if (!res.success) return alert("Research Error: " + res.error);
+            
+            RESEARCH_BRIEF = res.brief;
+            renderBrief(res.brief);
+
+          }).api_runResearch(kw, loc, GLOBAL_CONTEXT);
+
+        }).api_getContext(folderId);
+      }
+
+      function renderBrief(brief) {
+        document.getElementById('step2').classList.remove('hidden');
+        document.getElementById('difficultyBadge').innerText = `Diff: ${brief.difficulty_score}/10`;
+        document.getElementById('resH1').innerText = brief.proposed_h1;
+        document.getElementById('resGaps').innerText = brief.gap_keywords.join(', ');
+        document.getElementById('resPersona').innerText = brief.audience_persona;
+      }
+
+      function generateOutline() {
+        document.getElementById('step2').classList.add('opacity-50');
+        showLoader("Architecting Content Structure...");
+
+        google.script.run.withSuccessHandler(res => {
+          hideLoader();
+          if(!res.success) return alert("Outline Error: " + res.error);
+          
+          document.getElementById('step3').classList.remove('hidden');
+          document.getElementById('outlineEditor').value = JSON.stringify(res.outline, null, 2);
+          
+        }).api_generateOutline(RESEARCH_BRIEF, GLOBAL_CONTEXT);
+      }
+
+      function startDrafting() {
+        alert("Drafting module comming in next update! (End of Demo v1)");
+      }
+
+      // Settings
+      function showSettings() {
+        new bootstrap.Modal('#settingsModal').show();
+        google.script.run.withSuccessHandler(keys => {
+          document.getElementById('keySerper').value = keys.serper;
+          document.getElementById('keyGemini').value = keys.gemini;
+        }).getKeys();
+      }
+      function saveKeys() {
+        const s = document.getElementById('keySerper').value;
+        const g = document.getElementById('keyGemini').value;
+        google.script.run.withSuccessHandler(() => alert("Saved!")).saveKeys(s, g);
+      }
+    </script>
+  </body>
+</html>

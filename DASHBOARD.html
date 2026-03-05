@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Gravity | Content Factory Dashboard</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent: #ff007a;
+            --bg-dark: #0a0e17;
+            --card-glass: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --text-glow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(79, 172, 254, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 122, 0.05) 0%, transparent 40%);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 40px 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border-glass);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        main {
+            width: 90%;
+            max-width: 1200px;
+            padding: 50px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .glass-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease, border 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            text-shadow: var(--text-glow);
+        }
+
+        .section-title span {
+            margin-right: 15px;
+            background: var(--primary);
+            color: var(--bg-dark);
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        select,
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            color: white;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        select:focus,
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-launch {
+            grid-column: span 2;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            border: none;
+            border-radius: 50px;
+            padding: 18px;
+            color: var(--bg-dark);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+            margin-top: 20px;
+        }
+
+        .btn-launch:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
+        }
+
+        .workflow-visual {
+            grid-column: span 2;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .step-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .node-circle {
+            width: 40px;
+            height: 40px;
+            background: #1a1a1a;
+            border: 2px solid var(--border-glass);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            transition: all 0.5s ease;
+        }
+
+        .step-node.active .node-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .step-node.completed .node-circle {
+            background: var(--bg-dark);
+            border-color: var(--primary);
+        }
+
+        .step-node.completed .node-circle::after {
+            content: "✓";
+            color: var(--primary);
+        }
+
+        .node-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .step-node.active .node-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border-glass);
+            z-index: 1;
+        }
+
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .badge {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Content Research & Drafting</h1>
+        <div class="subtitle">Anti-Gravity Semantic Intelligence Engine</div>
+    </header>
+
+    <main>
+        <!-- LEFT COLUMN: BRAND & STRATEGY -->
+        <div class="glass-card">
+            <div class="section-title"><span>01</span> Intelligence Assets</div>
+
+            <div class="form-group">
+                <label>Select Client / Brand</label>
+                <select id="clientSelect">
+                    <option value="vincents">Vincent's Heating & Plumbing</option>
+                    <option value="elite">Elite Home Services (High End)</option>
+                    <option value="value">Value Plumbing (Price Leader)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Current Tone Model</label>
+                <div class="badge-list">
+                    <div class="badge">No BS</div>
+                    <div class="badge">Blue-Collar Truth</div>
+                    <div class="badge">Legacy Authority</div>
+                    <div class="badge">No Em-Dashes</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Primary Differentiator</label>
+                <input type="text" value="Fixed Right or It's Free | Heritage since 1959">
+            </div>
+
+            <div class="form-group">
+                <label>Local Landmarks / Context</label>
+                <textarea
+                    placeholder="e.g., St. Clair River humidity, Chrysler plant proximity, Marysville high school area...">The wet wind off the St. Clair River freezes outdoor coils faster here than inland. Most homes have dual-fuel setups.</textarea>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: TARGET & INTENT -->
+        <div class="glass-card">
+            <div class="section-title"><span>02</span> Tactical Objective</div>
+
+            <div class="form-group">
+                <label>Target Keyword</label>
+                <input type="text" id="targetKeyword" placeholder="e.g., Heat Pump Repair">
+            </div>
+
+            <div class="form-group">
+                <label>Geo-Location</label>
+                <input type="text" id="targetLocation" placeholder="e.g., Marysville, MI">
+            </div>
+
+            <div class="form-group">
+                <label>"Human Grease" (Worker Insight)</label>
+                <textarea
+                    placeholder="What does the customer actually say when they call in?">Customers panic when they see ice. They think a heat pump won't work in Michigan winters. We need to explain that it's just a handoff to the furnace.</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Target Audience Intent</label>
+                <select>
+                    <option>High Urgency (Broken Now)</option>
+                    <option>Researching/Upgrade</option>
+                    <option>Education (Why is it making that noise?)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- PROGRESS BUTTON -->
+        <button class="btn-launch" onclick="launchEngine()">🚀 Launch Content Factory Pipeline</button>
+
+        <!-- RESULTS AREA (HIDDEN BY DEFAULT) -->
+        <div class="glass-card hidden fade-in" id="resultsArea"
+            style="grid-column: span 2; margin-top: 30px; display:none;">
+            <div class="section-title" style="color:var(--secondary)"><span>✓</span> Strategic Output: Final Draft</div>
+            <div id="draftContent"
+                style="background: rgba(0,0,0,0.3); padding: 25px; border-radius: 12px; font-family: 'Inter', sans-serif; line-height: 1.6; color: rgba(255,255,255,0.9); border: 1px solid var(--border-glass);">
+                <!-- Content will be injected here -->
+            </div>
+            <div style="margin-top: 20px; text-align: right;">
+                <button class="badge"
+                    style="background: var(--secondary); color: white; border: none; cursor: pointer; padding: 10px 20px;">Download
+                    as Markdown</button>
+            </div>
+        </div>
+
+        <!-- WORKFLOW VISUALIZER -->
+        <div class="workflow-visual">
+            <div class="progress-line"></div>
+
+            <div class="step-node completed" id="node1">
+                <div class="node-circle"></div>
+                <div class="node-label">Project<br>Init</div>
+            </div>
+
+            <div class="step-node active" id="node2">
+                <div class="node-circle"></div>
+                <div class="node-label">Strategic<br>Intelligence</div>
+            </div>
+
+            <div class="step-node" id="node3">
+                <div class="node-circle"></div>
+                <div class="node-label">Structural<br>Outline</div>
+            </div>
+
+            <div class="step-node" id="node4">
+                <div class="node-circle"></div>
+                <div class="node-label">CoVe<br>Drafting</div>
+            </div>
+
+            <div class="step-node" id="node5">
+                <div class="node-circle"></div>
+                <div class="node-label">Final<br>Review</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const finalDraftHtml = `
+            <h1 style="color:var(--primary); font-family:'Outfit'; margin-top:0;">Heat Pump Repair in Marysville: Why Your Unit is Freezing Up</h1>
+            <p>If your heat pump quit and you're sitting in a house that's down to 62 degrees, you don't need a sales pitch. You need to know why your system is failing and what it’s going to cost to get the heat back on.</p>
+            <p>I’ve spent a lot of time on service calls along the St. Clair River. There is a specific kind of wet wind that comes off that water in January. Often, it cakes the outdoor coils in ice faster than the defrost cycle can keep up with. When that happens, your system isn't "broken" in the traditional sense. It's just suffocating.</p>
+            
+            <h3 style="color:var(--secondary);">What is Actually Happening to Your Heat Pump?</h3>
+            <ul>
+                <li><strong>Defrost Cycle Failure:</strong> The sensors that tell the unit to melt the ice have failed. If you keep running it like this, you’ll burn out the compressor.</li>
+                <li><strong>Reversing Valve Issues:</strong> This is the part that tells the heat pump to be a heater and not an air conditioner. If it’s stuck, you’re just blowing cold air while your bill goes up.</li>
+                <li><strong>The "Dual-Fuel" Handoff:</strong> Most Marysville homes have a gas furnace backup. If your outdoor sensor is buried in snow or ice, it might not tell the furnace to kick in.</li>
+            </ul>
+
+            <h3 style="color:var(--secondary);">Why Vincent's is the Marysville Standard</h3>
+            <p>We aren't the biggest company in St. Clair County, and we aren't the cheapest. We are the ones who get it <strong>Fixed Right.</strong></p>
+            <p>We use flat rate pricing. That means our tech will look at your system, find the problem, and give you a quote before they touch a wrench. You don't pay by the hour, so you don't have to worry about a "mystery bill" if the repair takes longer than expected.</p>
+            <p>Every repair we do comes with our "Fixed Right or It's Free" guarantee. We don't guess. We verify the fix before we leave your driveway.</p>
+        `;
+
+        function launchEngine() {
+            const btn = document.querySelector('.btn-launch');
+            const results = document.getElementById('resultsArea');
+            btn.innerHTML = "Processing Intelligence Brief...";
+            btn.style.opacity = "0.7";
+            btn.style.cursor = "wait";
+
+            // Visual feedback transitions
+            setTimeout(() => {
+                document.getElementById('node2').classList.remove('active');
+                document.getElementById('node2').classList.add('completed');
+                document.getElementById('node3').classList.add('active');
+                btn.innerHTML = "Building Architectural Outline...";
+            }, 1500);
+
+            setTimeout(() => {
+                document.getElementById('node3').classList.remove('active');
+                document.getElementById('node3').classList.add('completed');
+                document.getElementById('node4').classList.add('active');
+                btn.innerHTML = "Executing CoVe Chain Drafting...";
+            }, 3000);
+
+            setTimeout(() => {
+                document.getElementById('node4').classList.remove('active');
+                document.getElementById('node4').classList.add('completed');
+                document.getElementById('node5').classList.add('active');
+
+                // Show Results
+                results.style.display = "block";
+                document.getElementById('draftContent').innerHTML = finalDraftHtml;
+
+                btn.innerHTML = "🚀 Pipeline Complete";
+                btn.style.opacity = "1";
+                btn.style.cursor = "pointer";
+            }, 4500);
+        }
+    </script>
+</body>
+
+</html>

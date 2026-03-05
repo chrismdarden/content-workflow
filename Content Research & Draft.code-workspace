@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "../../.agent",
+			"name": "Global Agent Rules & Skills"
+		},
+		{
+			"path": "../../00_GLOBAL",
+			"name": "Global Scope (Directives)"
+		},
+		{
+			"path": ".",
+			"name": "Content Research Project"
+		},
+		{
+			"path": "G:/.shortcut-targets-by-id/1Wqt0w3e8SAgMEXuPEAX69dFWc796CCro/Prompt Library",
+			"name": "Prompt Library (Cloud)"
+		}
+	],
+	"settings": {}
+}
