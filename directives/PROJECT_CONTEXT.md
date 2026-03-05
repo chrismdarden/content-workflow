@@ -12,5 +12,10 @@
 - **Status**: Active development.
 - **Verified Scopes**: N/A
 
+## Machine Setup
+When cloning this project on a new device, run the following to restore external asset access:
+- **Run Setup Script**: `powershell execution/setup_workspace.ps1`
+- **Goal**: Reconstructs `.lnk` pointers to local Google Drive paths and verifies agent configuration.
+
 ## Standard Patterns
 - Modular directive/execution separation.

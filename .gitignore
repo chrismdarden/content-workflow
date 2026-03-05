@@ -1,0 +1,10 @@
+*.lnk
+.env
+.env.shortcut
+.tmp/
+artifacts/
+node_modules/
+dist/
+build/
+.DS_Store
+*.log
