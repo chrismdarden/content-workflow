@@ -1,0 +1,38 @@
+{
+    "project_name": "PoC Content Workflow",
+    "current_node": "complete",
+    "nodes": {
+        "research": {
+            "status": "completed",
+            "output": "Local context and metadata distilled for Romulus, MI.",
+            "approved": true
+        },
+        "outline": {
+            "status": "completed",
+            "output": "H1: Fast Water Heating Repair in Romulus, MI... (Approved in IP Node 1)",
+            "approved": true
+        },
+        "draft": {
+            "status": "completed",
+            "output": "Draft approved in IP Node 2. Ready for QA.",
+            "approved": true
+        },
+        "qa": {
+            "status": "completed",
+            "output": "QA Score: 9.6/10. Pass confirmed in IP Node 3.",
+            "approved": true
+        }
+    },
+    "context_refs": {
+        "brand_voice": "brand_voice_guide.md",
+        "sop": "standard_operating_procedures.md",
+        "previous_pieces": []
+    },
+    "metadata": {
+        "target_audience": "Homeowners",
+        "tone": "professional",
+        "keywords": [
+            "Water Heating Repair (in romulus)"
+        ]
+    }
+}

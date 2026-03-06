@@ -1,30 +1,17 @@
-# AGENTS.md — Content Workflow Project
+# AGENTS.md — Content Workflow
 
-> **Canonical global rules live at:** `C:\Users\Chris\.gemini\AGENTS.md`
-> This file extends those rules with project-specific context.
+> Global rules: `C:\Users\Chris\.gemini\AGENTS.md`
 
-## Project Identity
-- **Name**: Content Workflow
-- **Repo**: `https://github.com/chrismdarden/content-workflow.git`
-- **Branch**: `master`
-- **Workspace URI**: `c:\Projects\Content Workflow`
-
-## Project Purpose
-A PoC content pipeline using multi-model AI (Gemini + Claude) to research, outline, draft, and QA content pieces. NotebookLM MCP serves as the knowledge retrieval layer (semantic RAG substitute).
-
-## Folder Structure
-- `directives/` — `PROJECT_CONTEXT.md`, `PROJECT_LOG.md` (persistent state)
-- `execution/` — Python/JS scripts and automation tools
-- `artifacts/` — Session walkthroughs, deliverables
-- `.agent/` — Agent rules, skills, workflows (this folder)
+## Project
+- **Repo**: `chrismdarden/content-workflow` | Branch: `master`
+- **Purpose**: Multi-model PoC content pipeline (Gemini + Claude + NotebookLM MCP)
 
 ## Secrets
-- **No local `.env`**. Resolve via global pointer: `C:\Users\Chris\.gemini\.env - Shortcut.lnk`
-- Source of truth: `G:\My Drive\Work Files\G Google Antigravity\.env`
+- No local `.env`. Use: `C:\Users\Chris\.gemini\.env - Shortcut.lnk`
 
 ## External Assets
-- **Prompt Library**: `Prompt Library.lnk` → Google Drive (git-ignored)
-- Run `execution\setup_workspace.ps1` on a new machine to restore shortcuts.
+- `Prompt Library.lnk` → Google Drive (git-ignored). Run `execution\setup_workspace.ps1` on new machines.
 
-## Key Directives
-See `directives/PROJECT_CONTEXT.md` for architecture and `directives/PROJECT_LOG.md` for session history.
+## Persistent State
+- `directives/PROJECT_CONTEXT.md` — architecture snapshot
+- `directives/PROJECT_LOG.md` — reverse-chronological session log

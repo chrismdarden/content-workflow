@@ -3,9 +3,9 @@
 ## Development Journal
 
 ### 2026-03-05 - Workspace Alignment & Decentralized Migration
-- **Activity**: Aligned workspace with decentralized "Brain + Project" model.
-- **Decisions**: 
-    - Removed local `.env` violation (relying on Google Drive pointer).
+- **2026-03-05**: Deferred NotebookLM setup. Initiated Phase 1 of PoC Content Workflow ("Fake RAG"). Created `directives/context_library/` and `directives/workflow_state.json`.
+- **2026-03-05**: Aligned workspace with decentralized architecture. Established global secrets pointer and cross-device setup script. Pushed results to `master`.
+env` violation (relying on Google Drive pointer).
     - Updated `.agent/GEMINI.md` to point to global canonical rules at `C:\Users\Chris\.gemini\AGENTS.md`.
     - Corrected `.gitignore` to protect secrets.
 - **Status**: Aligned; compliance verified.
